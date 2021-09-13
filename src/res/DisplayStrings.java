@@ -1,6 +1,10 @@
 package res;
 
 public enum DisplayStrings {
+    ASK_NUMBER_OF_PLAYER("何人でプレイしますか？\n"),
+
+    GAME_START("<Dosh スタート>"),
+
     RULE_SUMMARY("<ルール概要>\n" +
             "・プレーヤーは2人以上です。\n" +
             "・各プレーヤーは30枚のチップを持っています。\n" +
@@ -15,7 +19,7 @@ public enum DisplayStrings {
             "③-1 ゾロ目以外の場合、ボートの出た目の数字の上に、出た目の枚数を置きます。\n" +
             "③-2 ゾロ目の場合、ボートの全ての数字の上に、数字の枚数のチップを置きます。"),
 
-    ASK_NUMBER_OF_PLAYER("何人でプレイしますか？\n");
+    BOARD_TOP_SIDE("+----+----+----+ +----+");
 
     private final String text;
 

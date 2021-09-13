@@ -4,6 +4,11 @@ import res.DisplayStrings;
 
 public class DisplayMessageManager {
 
+
+    public void beginDoshGame() {
+        System.out.println(DisplayStrings.GAME_START.getString());
+    }
+
     public void showExplanation() {
         System.out.println(DisplayStrings.RULE_SUMMARY.getString());
         System.out.println("");
@@ -20,5 +25,9 @@ public class DisplayMessageManager {
     }
 
     public void pressEnter() {
+    }
+
+    public void showInitializeBoard() {
+        System.out.println(DisplayStrings.BOARD_TOP_SIDE);
     }
 }
