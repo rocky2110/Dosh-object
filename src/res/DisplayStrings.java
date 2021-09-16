@@ -19,7 +19,8 @@ public enum DisplayStrings {
             "③-1 ゾロ目以外の場合、ボートの出た目の数字の上に、出た目の枚数を置きます。\n" +
             "③-2 ゾロ目の場合、ボートの全ての数字の上に、数字の枚数のチップを置きます。"),
 
-    BOARD_TOP_SIDE("+----+----+----+ +----+");
+    BOARD_TOP_AND_BOTTOM_LINE("+-----+-----+-----+  +-----+"),
+    BOARD_THIRD_LINE("+-----+-----+-----+  |     |");
 
     private final String text;
 

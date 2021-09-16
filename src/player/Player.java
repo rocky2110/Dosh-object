@@ -19,4 +19,8 @@ public class Player {
     public void additionTip (int diff) {
         tip += diff;
     }
+
+    public String getPlayerName() {
+        return playerName;
+    }
 }
