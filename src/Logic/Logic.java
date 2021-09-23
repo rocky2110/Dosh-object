@@ -60,11 +60,6 @@ public class Logic {
                                 displayMessageManager.showCheatingUpperSeven();
                                 diceSumNum = getDiceNumUpperSeven();
                                 break;
-
-                                // todo テストだお
-                            case 7:
-                                diceSumNum = 7;
-                                break;
                             default:
                                 displayMessageManager.confirmNotUseCheating();
                                 diceSumNum = throwTwoDice();
