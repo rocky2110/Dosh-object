@@ -11,6 +11,7 @@ public class Board {
     private DisplayMessageManager displayMessageManager;
     // Map を使って、どのますにチップが置かれているかを管理する方針でとりあえず進めてみる
     private Map<Integer, Boolean> isSetTip = new HashMap<>();
+    private int jailCount = 0;
     public final int Int_IF_ALL_TIP_Set_ON_BOARD;
 
 
@@ -56,7 +57,11 @@ public class Board {
     // ロジックから呼ぶ。ボードにチップをセットする。(== ボード上の数字を入れ替える事ができる)こと。ここが難しそう。。どうやって、置き換えを表現するか。。
     public void setTipOnBoard(int diceSumNumber) {
         // map の key: diceSumNumber の value を true に変更する。
+        if (diceSumNumber == 7) {
+            jailCount += 1;
+        }
         isSetTip.put(diceSumNumber, true);
+        System.out.println("jailCount :" + jailCount);
     }
 
     // ロジックから呼ぶ。ボードからチップをゲット or セットする
@@ -75,14 +80,28 @@ public class Board {
     public int getAllTipOnBoard() {
         // Map のなかで value が true になっている key を全て足す。
         int allTipOnBoard = 0;
+        // 牢獄カウントを初期化する
         for (Map.Entry<Integer, Boolean> entry : isSetTip.entrySet()) {
             if (entry.getValue()) {
-                allTipOnBoard += entry.getKey();
+                if (entry.getKey() == 7) {
+                    System.out.println("jailCount :" + jailCount);
+                    System.out.println("Board_7 * jailCount :" + Board_7 * jailCount);
+                    allTipOnBoard += Board_7 * jailCount;
+                } else {
+                    allTipOnBoard += entry.getKey();
+                }
             }
         }
         // ボードの状態を初期化する
         BoardStateInitialized();
+        // 牢獄の状態を初期化する
+        initializeJailCount();
+        System.out.println("alltipOnBoard :" + allTipOnBoard);
         return allTipOnBoard;
+    }
+
+    private void initializeJailCount() {
+        jailCount = 0;
     }
 
 
@@ -97,9 +116,8 @@ public class Board {
     }
 
 
-
     // map の key の値を全て合計して返却する
-    private int getNumberOfAllTipOnBoard () {
+    private int getNumberOfAllTipOnBoard() {
         int allTipOnBoard = 0;
         for (Map.Entry<Integer, Boolean> entry : isSetTip.entrySet()) {
             if (!entry.getValue()) {
@@ -174,7 +192,7 @@ public class Board {
         String sixOnBoardState = getSixState();
         String eightOnBoardState = getEightState();
         String sevenOnBoardState = getSevenState();
-        String secondLine = "|  " + sixOnBoardState + "  |     |  " + eightOnBoardState + "  |  |  " +  sevenOnBoardState + "  |";
+        String secondLine = "|  " + sixOnBoardState + "  |     |  " + eightOnBoardState + "  |  |  " + sevenOnBoardState + "  |";
         return secondLine;
     }
 
