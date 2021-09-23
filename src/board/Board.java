@@ -9,13 +9,11 @@ import static util.DoshConst.*;
 
 public class Board {
     private DisplayMessageManager displayMessageManager;
-    // Map を使って、どのますにチップが置かれているかを管理する方針でとりあえず進めてみる
     private Map<Integer, Boolean> isSetTip = new HashMap<>();
     private int jailCount = 0;
     public final int Int_IF_ALL_TIP_Set_ON_BOARD;
 
 
-    // map の初期状態では、チップが置かれていないので全て false
     {
         BoardStateInitialized();
         Int_IF_ALL_TIP_Set_ON_BOARD = getNumberOfAllTipOnBoard();
@@ -27,76 +25,50 @@ public class Board {
     }
 
 
-    // ボードの出力担当
     public void showBoard() {
-        // 最初の列を出力する
         displayMessageManager.showFirstAndLastLineOnBoard();
-        // 2列目を作る
         String secondLine = createSecondLineOnBoard();
         displayMessageManager.showSecondLineOnBoard(secondLine);
-
-        // 3列目を表示する
         displayMessageManager.showThirdAndFiveLine();
-
-        // 4列目を作る
         String forthLine = createForthLineOnBoard();
         displayMessageManager.showForthLineOnBoard(forthLine);
-
-        // 5列目を表示する
         displayMessageManager.showThirdAndFiveLine();
-
-        // 6列目を表示する
         String sixLine = createSixLineOnBoard();
         displayMessageManager.showSixLine(sixLine);
-
-        // 最後の列を出力する
         displayMessageManager.showFirstAndLastLineOnBoard();
     }
 
 
-    // ロジックから呼ぶ。ボードにチップをセットする。(== ボード上の数字を入れ替える事ができる)こと。ここが難しそう。。どうやって、置き換えを表現するか。。
     public void setTipOnBoard(int diceSumNumber) {
-        // map の key: diceSumNumber の value を true に変更する。
         if (diceSumNumber == 7) {
             jailCount += 1;
         }
         isSetTip.put(diceSumNumber, true);
-        System.out.println("jailCount :" + jailCount);
     }
 
-    // ロジックから呼ぶ。ボードからチップをゲット or セットする
     public int getOrSetTipOnBoard(int diceSumNumber) {
         if (canFetchTip(diceSumNumber)) {
-            // true なら、チップがすでに置いてあって取る事が可能なので、map の状態を false に書き換えてdiceSumNumber を返却する
             isSetTip.put(diceSumNumber, false);
             return diceSumNumber;
         } else {
-            // false なら、チップが置かれていないので、map の状態を true に書き換えて -1 * diceSumNumber を返却する
             isSetTip.put(diceSumNumber, true);
             return -1 * diceSumNumber;
         }
     }
 
     public int getAllTipOnBoard() {
-        // Map のなかで value が true になっている key を全て足す。
         int allTipOnBoard = 0;
-        // 牢獄カウントを初期化する
         for (Map.Entry<Integer, Boolean> entry : isSetTip.entrySet()) {
             if (entry.getValue()) {
                 if (entry.getKey() == 7) {
-                    System.out.println("jailCount :" + jailCount);
-                    System.out.println("Board_7 * jailCount :" + Board_7 * jailCount);
                     allTipOnBoard += Board_7 * jailCount;
                 } else {
                     allTipOnBoard += entry.getKey();
                 }
             }
         }
-        // ボードの状態を初期化する
         BoardStateInitialized();
-        // 牢獄の状態を初期化する
         initializeJailCount();
-        System.out.println("alltipOnBoard :" + allTipOnBoard);
         return allTipOnBoard;
     }
 
@@ -105,18 +77,15 @@ public class Board {
     }
 
 
-    // ボード上の数字の上にチップが載っているかどうか確認できる。ロジックからこのメソッドを呼んで、Map に検索をかけて結果を取得する。
     public Boolean canFetchTip(int diceSumNumber) {
         return isSetTip.get(diceSumNumber);
     }
 
-    // ボード上の全てのますの上にチップを載せる
     public void setAllTipOnBoard() {
         setFullTipOnBoard();
     }
 
 
-    // map の key の値を全て合計して返却する
     private int getNumberOfAllTipOnBoard() {
         int allTipOnBoard = 0;
         for (Map.Entry<Integer, Boolean> entry : isSetTip.entrySet()) {
